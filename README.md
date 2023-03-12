@@ -1,5 +1,7 @@
 # Generalized Bayesian Likelihood-Free Inference Using Scoring Rules Estimators 
 
+For the non SG-MCMC based experiments, please see [here](https://github.com/LoryPack/GenBayes_LikelihoodFree_ScoringRules). 
+
 Code for the paper: __Generalized Bayesian Likelihood-Free Inference Using Scoring Rules Estimators__,
 which can be found [here](https://arxiv.org/abs/2104.03889).
 

@@ -4,11 +4,8 @@ import jax.numpy as jnp
 import numpy as np
 import torch
 from jax import grad, vmap
-from torchtyping import TensorType, patch_typeguard
+from torchtyping import TensorType
 from typing import Tuple
-
-patch_typeguard()  # use before @typechecked
-
 
 class ScoringRule(metaclass=ABCMeta):
     """This is the abstract class for the ScoringRule. I removed the summary statistics calculation which is usually

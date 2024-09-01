@@ -11,9 +11,12 @@ Note: Only tested for python 3.8.13
 1. `pip install -r requirements.txt`
 2. `pip install -e .`
 
-# Notes
-## `examples`
-Please see examples folder for basic inference setups
+# Experiments
+1. Exp-1 : Univariate g-and-k model, Figures 1 and 2
+2. Exp-2 : Univariate g-and-k model (Concentration), Figure 3
+3. Exp-3 : Multivariate g-and-k model (Well-specified, misspecified concentrations), Figures 4 and 5
+4. Exp-4 : Linear Lorenz-96 model, Figure 6
+5. Exp-5 : Neural Lorenz-96 model, Figure 7
 
 # Code References
 The files `src/sampler/gradient_estimation.py`, `src/sampler/gradient_estimation.py` and `src/sampler/gradient_estimation.py` are modified from the original repo located at:

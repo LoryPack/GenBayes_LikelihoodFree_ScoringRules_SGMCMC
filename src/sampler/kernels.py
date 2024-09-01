@@ -1,3 +1,9 @@
+# This file is modified from the original file located at:
+# https://github.com/jeremiecoullon/SGMCMCJax/blob/master/sgmcmcjax/kernels.py
+# The modifications include changes to the kernel adapted to our custom gradient estimation functions
+# Original file copyright (c) 2022 Jeremie Coullon
+# Licensed under the Apache 2.0 License.
+
 from typing import Any, Callable, NamedTuple, Optional, Tuple
 
 import jax.numpy as jnp

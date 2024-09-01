@@ -1,3 +1,8 @@
+# This file is modified from the original file located at:
+# https://github.com/jeremiecoullon/SGMCMC_bandit_tuning/blob/master/tuning/mamba.py
+# The modfications mainly revolve around dealing with NAN errors that crop up from the models
+# Original file copyright (c) 2021 Jeremie Coullon
+
 from typing import NamedTuple, Callable, Dict, Union, Any, List
 from tqdm.auto import tqdm
 from sgmcmcjax.types import PyTree, PRNGKey

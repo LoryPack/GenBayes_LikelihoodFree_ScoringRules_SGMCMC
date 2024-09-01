@@ -1,3 +1,8 @@
+# This file is modified from the original file located at:
+# https://github.com/jeremiecoullon/SGMCMCJax/blob/master/sgmcmcjax/optimizer.py
+# Original file copyright (c) 2022 Jeremie Coullon
+# Licensed under the Apache 2.0 License.
+
 from typing import Callable, Tuple
 from tqdm import tqdm
 import jax

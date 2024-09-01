@@ -56,6 +56,21 @@ class L96ModelTests(unittest.TestCase):
         assert_equal = functools.partial(torch.testing.assert_close, rtol=0, atol=0)
         assert_equal(self.sims, sims)
 
+class L96ModelTests(unittest.TestCase):
+    def setUp(self) -> None:
+        torch.set_default_dtype(torch.float64)
+        sim_l96 = Lorenz96SDE()
+        self.sims = sim_l96.torch_forward_simulate(np.array([1.5,0.5,1.0]), 10).detach()
+
+        return super().setUp()
+
+    def test_randomness(self):
+        torch.set_default_dtype(torch.float64)
+        l96 = Lorenz96SDE()
+        sims = l96.torch_forward_simulate(np.array([1.5,0.5,1.0]), 10).detach()
+        assert_equal = functools.partial(torch.testing.assert_close, rtol=0, atol=0)
+        assert_equal(self.sims, sims)
+
 class NeuralL96ModelTests(unittest.TestCase):
     def setUp(self) -> None:
         torch.set_default_dtype(torch.float64)
@@ -68,6 +83,7 @@ class NeuralL96ModelTests(unittest.TestCase):
         return super().setUp()
 
     def test_randomness(self):
+        torch.set_default_dtype(torch.float64)
         l96 = NeuralLorenz96SDE()
         default_params = l96.get_default_mlp_params(seed=0)
         init_params = torch.from_numpy(np.concatenate([np.array([0.5])] + [p.detach().flatten().numpy() for p in default_params]))

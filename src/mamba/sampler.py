@@ -1,3 +1,7 @@
+# This file is copied from the original file located at:
+# https://github.com/jeremiecoullon/SGMCMC_bandit_tuning/blob/master/tuning/sampler.py
+# Original file copyright (c) 2021 Jeremie Coullon
+
 import jax.numpy as jnp
 from jax import jit, random
 import functools

@@ -11,7 +11,7 @@ from ..mamba.mamba import run_MAMBA
 from ..mamba.ksd import imq_KSD
 from ..utils import GradientNANException
 
-torch.set_default_dtype(torch.float64) #absolutely necessary to prevent nan errors!
+torch.set_default_dtype(torch.float64) #necessary to prevent nan errors!
 
 import jax
 
@@ -20,7 +20,15 @@ class SGMCMC():
     Stochastic-Gradient MCMC
     """
 
-    def __init__(self, model, observations, joint_log_prob, transformer, build_kernel_func=build_sgnht_lfi_kernel, build_grad_est_func=build_gradient_estimation_fn, n_samples=110000, seed=42, w=1):
+    def __init__(self, model, 
+                 observations, 
+                 joint_log_prob, 
+                 transformer, 
+                 build_kernel_func=build_sgnht_lfi_kernel, 
+                 build_grad_est_func=build_gradient_estimation_fn, 
+                 n_samples=110000, 
+                 seed=42, 
+                 w=1):
         self.model = model
         self.observations = observations
         self.joint_log_prob = joint_log_prob
@@ -93,7 +101,14 @@ class SGMCMC():
 
         return optimal_dt
 
-    def sample(self, init_params=None, use_mamba=True, mamba_log_step_size_range = -jax.numpy.arange(1., 8., 0.5), R=10, step_size=0.01, use_optim=True, optim_step_size=0.01):
+    def sample(self, 
+               init_params=None, 
+               use_mamba=True, 
+               mamba_log_step_size_range = -jax.numpy.arange(1., 8., 0.5), 
+               R=10, 
+               step_size=0.01, 
+               use_optim=True, 
+               optim_step_size=0.01):
         if use_optim:
             self._optim(dt=optim_step_size, init_params=init_params)
         else:

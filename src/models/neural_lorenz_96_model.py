@@ -8,7 +8,14 @@ from typing import List
 from functorch import make_functional
 
 class NeuralLorenz96SDE(ProbabilisticModel, Continuous):
-    def __init__(self, name:str='Lorenz96SDE', seed:int=42, simulation_method='euler', ts=torch.linspace(0, 1.5, 21), priors:List=None, y0=torch.tensor([6.4558, 1.1054, -1.4502, -0.1985, 1.1905, 2.3887, 5.6689, 6.7284])):
+    def __init__(self, 
+                 name:str='Lorenz96SDE', 
+                 seed:int=42, 
+                 simulation_method='euler', 
+                 ts=torch.linspace(0, 1.5, 21), 
+                 priors:List=None, 
+                 y0=torch.tensor([6.4558, 1.1054, -1.4502, -0.1985, 1.1905, 2.3887, 5.6689, 6.7284], dtype=torch.float64)
+                 ):
         self.seed = seed
         self.param_dim = 111
         self.ts = ts
@@ -135,9 +142,7 @@ class MLP(torch.nn.Module):
         self._model = torch.nn.Sequential(
             torch.nn.Linear(in_size, mlp_size),
             torch.nn.ReLU(),
-            torch.nn.Linear(mlp_size, out_size),
-    #        torch.nn.SiLU(),
-    #        torch.nn.Linear(mlp_size, out_size),
+            torch.nn.Linear(mlp_size, out_size)
         )
 
     def forward(self, x):

@@ -1,3 +1,7 @@
+# This file is modified from the original file located at:
+# https://github.com/jeremiecoullon/SGMCMC_bandit_tuning/blob/master/tuning/util.py
+# Original file copyright (c) 2021 Jeremie Coullon
+
 import numpy as np
 from jax import random
 from .sampler import timed_sampler

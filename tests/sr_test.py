@@ -24,7 +24,7 @@ class EnergyScoreTests(unittest.TestCase):
         # create fake simulated data
         self.mu._fixed_values = [1.1]
         self.sigma._fixed_values = [1.0]
-        self.y_sim, self.y_sim_grads = self.model.forward_simulate_and_gradient(self.model.get_input_values(), 100,
+        self.y_sim = self.model.forward_simulate(self.model.get_input_values(), 100,
                                                                                 rng=np.random.RandomState(1))
         # create observed data
         self.y_obs = [1.8]
@@ -58,27 +58,6 @@ class EnergyScoreTests(unittest.TestCase):
         jax_score = self.scoring_rule_beta1_jax.score(self.y_obs, self.y_sim)
         # check they are identical; notice jax uses reduced precision, so need to change a bit the tolerance
         self.assertTrue(np.allclose(numpy_score, jax_score, atol=1e-5, rtol=1e-5))
-
-    def test_grad(self):
-        # test if it raises RuntimeError if jax is not used
-        self.assertRaises(RuntimeError, self.scoring_rule.score_gradient, self.y_obs, self.y_sim, self.y_sim_grads)
-
-        # test if it raises RuntimeError when the number of gradients is not equal to the number of simulations
-        self.assertRaises(RuntimeError, self.scoring_rule.score_gradient, self.y_obs, self.y_sim,
-                          self.y_sim_grads[0:-2])
-
-        # test now the gradient
-        for score in [self.scoring_rule_jax, self.scoring_rule_beta1_jax]:
-            score_grad = score.score_gradient(self.y_obs, self.y_sim, self.y_sim_grads)
-            # check the shape of the score:
-            self.assertEqual(score_grad.shape, (2,))
-
-    def test_grad_additive(self):
-        for score in [self.scoring_rule_jax, self.scoring_rule_beta1_jax]:
-            comp_grad_a = score.score_gradient([self.y_obs_double[0]], self.y_sim, self.y_sim_grads)
-            comp_grad_b = score.score_gradient([self.y_obs_double[1]], self.y_sim, self.y_sim_grads)
-            comp_grad_two = score.score_gradient(self.y_obs_double, self.y_sim, self.y_sim_grads)
-            self.assertTrue(np.allclose(comp_grad_two, comp_grad_a + comp_grad_b))
 
 
 class KernelScoreTests(unittest.TestCase):
@@ -127,7 +106,7 @@ class KernelScoreTests(unittest.TestCase):
         # create fake simulated data
         self.mu._fixed_values = [1.1]
         self.sigma._fixed_values = [1.0]
-        self.y_sim, self.y_sim_grads = self.model.forward_simulate_and_gradient(self.model.get_input_values(), 100,
+        self.y_sim = self.model.forward_simulate(self.model.get_input_values(), 100,
                                                                                 rng=np.random.RandomState(1))
 
         def def_gaussian_kernel_numpy(sigma=1):
@@ -223,34 +202,6 @@ class KernelScoreTests(unittest.TestCase):
         jax_score = self.kernel_energy_SR_jax.score(self.y_obs, self.y_sim)
         # check they are identical; notice jax uses reduced precision, so need to change a bit the tolerance
         self.assertTrue(np.allclose(numpy_score, jax_score, atol=1e-5, rtol=1e-5))
-
-    def test_grad(self):
-        # test if it raises RuntimeError if jax is not used
-        self.assertRaises(RuntimeError, self.scoring_rule.score_gradient, self.y_obs, self.y_sim, self.y_sim_grads)
-
-        # test if it raises RuntimeError when the number of gradients is not equal to the number of simulations
-        self.assertRaises(RuntimeError, self.scoring_rule.score_gradient, self.y_obs, self.y_sim,
-                          self.y_sim_grads[0:-2])
-
-        # test now the gradient
-        for score in [self.scoring_rule_jax, self.scoring_rule_biased_jax, self.kernel_SR_external_jax,
-                      self.kernel_SR_external_jax_biased]:
-            score_grad = score.score_gradient(self.y_obs, self.y_sim, self.y_sim_grads)
-            self.assertEqual(score_grad.shape, (2,))
-            self.assertTrue(np.isfinite(score_grad).all())
-            # todo this does not work for self.kernel_energy_SR_jax, even if I exclude the diagonal elements from
-            #  the computation
-
-    def test_grad_additive(self):
-        for score in [self.scoring_rule_jax, self.scoring_rule_biased_jax, self.kernel_SR_external_jax,
-                      self.kernel_SR_external_jax_biased]:
-            # todo this does not work for self.kernel_energy_SR_jax, even if I exclude the diagonal elements from
-            #  the computation
-            comp_grad_a = score.score_gradient([self.y_obs_double[0]], self.y_sim, self.y_sim_grads)
-            comp_grad_b = score.score_gradient([self.y_obs_double[1]], self.y_sim, self.y_sim_grads)
-            comp_grad_two = score.score_gradient(self.y_obs_double, self.y_sim, self.y_sim_grads)
-            # print(comp_grad_two, comp_grad_a + comp_grad_b)
-            self.assertTrue(np.allclose(comp_grad_two, comp_grad_a + comp_grad_b))
 
 
 class EnergyScoreTorchTests(unittest.TestCase):

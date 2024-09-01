@@ -1,3 +1,9 @@
+# This file is modified from the original file located at:
+# https://github.com/jeremiecoullon/SGMCMCJax/blob/master/sgmcmcjax/gradient_estimation.py
+# The modifications include changes to the gradient estimation functions to adapt them for our SR gradient estimator
+# Original file copyright (c) 2022 Jeremie Coullon
+# Licensed under the Apache 2.0 License.
+
 from collections import namedtuple
 from typing import Any, Callable, Tuple
 
@@ -12,10 +18,10 @@ from ..utils import transform_neural_lorenz_parameter, GradientNANException
 def build_neural_l96_gradient_estimation_fn(
     joint_log_prob, data
 ) -> Tuple[Callable, Callable]:
-    """Build a custom gradient estimator for l96 model
+    """Build a custom scoring rule gradient estimator for the neural l96 model
 
     Args:
-        model (torch.nn.module): LFI model 
+        model (torch.nn.module): Simulator-based neural L96 model 
         data (Tuple): tuple of data. It should either have a single array (for unsupervised problems) or have two arrays (for supervised problems)
 
     Returns:
@@ -45,10 +51,10 @@ def build_neural_l96_gradient_estimation_fn(
 def build_gradient_estimation_fn(
     joint_log_prob, data
 ) -> Tuple[Callable, Callable]:
-    """Build a standard gradient estimator
+    """Build a scoring rule gradient estimator
 
     Args:
-        model (torch.nn.module): LFI model 
+        model (torch.nn.module): Simulator-based model 
         data (Tuple): tuple of data. It should either have a single array (for unsupervised problems) or have two arrays (for supervised problems)
 
     Returns:

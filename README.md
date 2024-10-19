@@ -3,7 +3,7 @@
 For the non SG-MCMC based experiments, please see [here](https://github.com/LoryPack/GenBayes_LikelihoodFree_ScoringRules). 
 
 Code for the paper: __Generalized Bayesian Likelihood-Free Inference Using Scoring Rules Estimators__,
-which can be found [here](https://arxiv.org/abs/2104.03889).
+which can be found [here](https://doi.org/10.1214/24-EJS2283).
 
 # Installation instructions
 Note: Only tested for python 3.8.13
@@ -26,3 +26,20 @@ Original file copyright (c) 2022 Jeremie Coullon, licensed under the Apache 2.0 
 The files `src/mamba/gridsearch.py`, `src/mamba/kdf.py`, `src/mamba/mambda.py`,`src/mamba/sampler.py` and `src/mamba/util.py` are modified from the original repo located at:
 https://github.com/jeremiecoullon/SGMCMC_bandit_tuning.
 Original file copyright (c) 2021 Jeremie Coullon.
+
+# Citation
+Please use the following `.bib` entry:
+```bibtex
+@article{pacchiardi2024generalized,
+        author = {Lorenzo Pacchiardi and Sherman Khoo and Ritabrata Dutta},
+        title = {{Generalized Bayesian likelihood-free inference}},
+        volume = {18},
+        journal = {Electronic Journal of Statistics},
+        number = {2},
+        publisher = {Institute of Mathematical Statistics and Bernoulli Society},
+        pages = {3628 -- 3686},
+        year = {2024},
+        doi = {10.1214/24-EJS2283},
+        URL = {https://doi.org/10.1214/24-EJS2283}
+}
+```
